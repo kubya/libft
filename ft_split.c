@@ -62,7 +62,7 @@ static char	*ft_walloc(char *str, char c, int *j)
 		{
 			while (str[*j] && str[*j] != c)
 				*j += 1;
-			dest = (char *)malloc((*j + 1) * sizeof(char));
+			dest = (char *)malloc((*j - i + 1) * sizeof(char));
 			if (dest == NULL)
 				return (NULL);
 			break ;
@@ -105,10 +105,8 @@ char	**ft_split(char const *str, char c)
 	while (i < j)
 	{
 		tab[i] = ft_walloc(((char *)str), c, &k);
-		if (tab[i] == NULL)
-		{
+		if (!tab[i])
 			ft_free(tab[i]);
-		}
 		i++;
 	}
 	return (tab);

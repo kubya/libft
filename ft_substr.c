@@ -12,14 +12,25 @@
 
 #include "libft.h"
 
+static char	*handler(char const *s, unsigned int start)
+{
+	if (s == NULL)
+		return (NULL); 
+	if ((size_t)ft_strlen(s) < start)
+		return (ft_strdup(""));
+	return (NULL);
+}
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	j;
 	char	*str;
 
-	if (s == NULL)
-		return (NULL);
+	if (s == NULL || (size_t)ft_strlen(s) < start)
+		return (handler(s, start));
+	if ((size_t)ft_strlen(s + start) < len)
+		len = (size_t)ft_strlen(s + start);
 	str = (char *)malloc((len + 1) * sizeof(*s));
 	if (str == NULL)
 		return (NULL);

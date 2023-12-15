@@ -1,5 +1,4 @@
-LIBRARY	= libft
-OUTN	= $(LIBRARY).a
+NAME	= libft.a
 
 CC		= gcc
 FLAGS	= -Wall -Wextra -Werror
@@ -41,25 +40,19 @@ SRC		= ft_isalnum \
 
 CSRC	= $(SRC:%=%.c)
 OSRC	= $(SRC:%=%.o)
-NAME	= $(OUTN)
 
 $(NAME): 
 		$(CC) $(FLAGS) -c $(CSRC) -I./ 
-		ar -rc $(OUTN) $(OSRC)
+		ar -rc $(NAME) $(OSRC)
 
 all: $(NAME)
 
 clean:
-		rm -f $(NAME)
 		rm -f $(OSRC)
 
 fclean: clean
 		rm -f $(NAME)
 
-wclean:
-		del $(NAME)
-		del $(OSRC)
-
 re: fclean all
 
-.PHONY: all, clean, fclean, re, wclean
+.PHONY: all, clean, fclean, re
