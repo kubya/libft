@@ -13,22 +13,6 @@
 #include "libft.h"
 #include <stdio.h>
 
-static size_t	ft_strnum(char const *str, char c)
-{
-	size_t	i;
-	size_t	res;
-
-	i = 0;
-	res = 0;
-	while (str[i])
-	{
-		if (str[i] != c && (str[i + 1] == c || str[i + 1] == '\0'))
-			res++;
-		i++;
-	}
-	return (res);
-}
-
 static void	ft_strcpy(char *dest, char const *str, char c)
 {
 	size_t	i;
@@ -42,7 +26,7 @@ static void	ft_strcpy(char *dest, char const *str, char c)
 	dest[i] = '\0';
 }
 
-static void ft_free(char **tab, size_t *y)
+static void	ft_free(char **tab, size_t *y)
 {
 	size_t	i;
 
@@ -56,6 +40,15 @@ static void ft_free(char **tab, size_t *y)
 	return ;
 }
 
+static size_t	calnum(char const *str, size_t y, char c)
+{
+	size_t	num;
+
+	num = 0;
+	while (str[y + num] && str[y + num] != c)
+		num++;
+	return (num);
+}
 
 static int	ft_walloc(char const *str, char **tab, char c)
 {
@@ -67,9 +60,7 @@ static int	ft_walloc(char const *str, char **tab, char c)
 	y = 0;
 	while (str[y])
 	{
-		num = 0;
-		while (str[y + num] && str[y + num] != c)
-			num++;
+		num = calnum(str, y, c);
 		if (num > 0)
 		{
 			tab[i] = malloc(sizeof(char) * (num + 1));
@@ -78,8 +69,7 @@ static int	ft_walloc(char const *str, char **tab, char c)
 				ft_free(tab, &i);
 				return (0);
 			}
-			ft_strcpy(tab[i], (str + y), c);
-			i++;
+			ft_strcpy(tab[i++], (str + y), c);
 			y = y + num;
 		}
 		else
@@ -93,10 +83,18 @@ char	**ft_split(char const *str, char c)
 {
 	char	**tab;
 	size_t	num;
+	size_t	i;
 
+	i = 0;
+	num = 0;
+	while (str[i])
+	{
+		if (str[i] != c && (str[i + 1] == c || str[i + 1] == '\0'))
+			num++;
+		i++;
+	}
 	if (!str)
 		return (NULL);
-	num = ft_strnum(str, c);
 	tab = malloc((num + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
