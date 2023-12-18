@@ -15,7 +15,7 @@
 static char	*handler(char const *s, unsigned int start)
 {
 	if (s == NULL)
-		return (NULL); 
+		return (NULL);
 	if ((size_t)ft_strlen(s) < start)
 		return (ft_strdup(""));
 	return (NULL);
