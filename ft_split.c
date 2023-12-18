@@ -58,7 +58,12 @@ static void	ft_walloc(char const *str, char **tab, char c)
 		{
 			tab[i] = malloc(sizeof(char) * (num + 1));
 			if (!tab[i])
+			{
+				while (i > 0)
+					free(tab[--i]);
+				free(tab);
 				return ;
+			}
 			ft_strcpy(tab[i], (str + y), c);
 			i++;
 			y = y + num;
@@ -74,6 +79,8 @@ char	**ft_split(char const *str, char c)
 	char	**tab;
 	size_t	num;
 
+	if (!str)
+		return (NULL);
 	num = ft_strnum(str, c);
 	tab = malloc((num + 1) * sizeof(char *));
 	if (!tab)
