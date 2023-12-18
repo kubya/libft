@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 static size_t	ft_strnum(char const *str, char c)
 {
@@ -41,7 +42,22 @@ static void	ft_strcpy(char *dest, char const *str, char c)
 	dest[i] = '\0';
 }
 
-static void	ft_walloc(char const *str, char **tab, char c)
+static void ft_free(char **tab, size_t *y)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < *y)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	return ;
+}
+
+
+static int	ft_walloc(char const *str, char **tab, char c)
 {
 	size_t	i;
 	size_t	y;
@@ -59,10 +75,8 @@ static void	ft_walloc(char const *str, char **tab, char c)
 			tab[i] = malloc(sizeof(char) * (num + 1));
 			if (!tab[i])
 			{
-				while (i > 0)
-					free(tab[--i]);
-				free(tab);
-				return ;
+				ft_free(tab, &i);
+				return (0);
 			}
 			ft_strcpy(tab[i], (str + y), c);
 			i++;
@@ -72,6 +86,7 @@ static void	ft_walloc(char const *str, char **tab, char c)
 			y++;
 	}
 	tab[i] = 0;
+	return (1);
 }
 
 char	**ft_split(char const *str, char c)
@@ -85,6 +100,7 @@ char	**ft_split(char const *str, char c)
 	tab = malloc((num + 1) * sizeof(char *));
 	if (!tab)
 		return (NULL);
-	ft_walloc(str, tab, c);
+	if (!ft_walloc(str, tab, c))
+		return (NULL);
 	return (tab);
 }
