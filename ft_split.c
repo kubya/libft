@@ -26,7 +26,7 @@ static void	ft_strcpy(char *dest, char const *str, char c)
 	dest[i] = '\0';
 }
 
-static void	ft_free(char **tab, size_t *y)
+static int	ft_free(char **tab, size_t *y)
 {
 	size_t	i;
 
@@ -37,17 +37,7 @@ static void	ft_free(char **tab, size_t *y)
 		i++;
 	}
 	free(tab);
-	return ;
-}
-
-static size_t	calnum(char const *str, size_t y, char c)
-{
-	size_t	num;
-
-	num = 0;
-	while (str[y + num] && str[y + num] != c)
-		num++;
-	return (num);
+	return (0);
 }
 
 static int	ft_walloc(char const *str, char **tab, char c)
@@ -60,15 +50,14 @@ static int	ft_walloc(char const *str, char **tab, char c)
 	y = 0;
 	while (str[y])
 	{
-		num = calnum(str, y, c);
+		num = 0;
+		while (str[y + num] && str[y + num] != c)
+			num++;
 		if (num > 0)
 		{
 			tab[i] = malloc(sizeof(char) * (num + 1));
 			if (!tab[i])
-			{
-				ft_free(tab, &i);
-				return (0);
-			}
+				return (ft_free(tab, &i));
 			ft_strcpy(tab[i++], (str + y), c);
 			y = y + num;
 		}
