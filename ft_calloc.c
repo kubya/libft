@@ -18,9 +18,9 @@ void	*ft_calloc(size_t num, size_t size)
 	size_t	n;
 	void	*p;
 
-	if (size * num > UINT32_MAX)
-		return (NULL);
 	n = num * size;
+	if (n > UINT32_MAX)
+		return (NULL);
 	p = malloc(n);
 	if (p == NULL)
 		return (NULL);
