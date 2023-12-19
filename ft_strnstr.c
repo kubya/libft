@@ -17,6 +17,8 @@ char	*ft_strnstr(const char *str, const char *src, size_t num)
 	size_t		i;
 	size_t		y;
 
+	if (!str)
+		return (NULL);
 	if (!src[0])
 		return ((char *)str);
 	i = 0;
