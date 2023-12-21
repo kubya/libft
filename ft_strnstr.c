@@ -21,6 +21,8 @@ char	*ft_strnstr(const char *str, const char *src, size_t num)
 		return (NULL);
 	if (!src[0])
 		return ((char *)str);
+	else if (str[0] == 0 || 1 > num || (str[0] == 0
+		&& (src[0] != 0)))
 	i = 0;
 	while (str[i] && i < num)
 	{
